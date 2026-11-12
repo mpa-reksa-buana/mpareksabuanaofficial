@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPA. REKSA BUANA - UNISKA KEDIRI</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 42px 18px 80px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #f2f4f2;
+
+      /* Background setelah intro */
+      background:
+        linear-gradient(
+          rgba(5, 10, 7, 0.78),
+          rgba(5, 9, 7, 0.90)
+        ),
+        url("bg.jpg")
+        center 30% / cover no-repeat scroll;
+
+      overflow-x: hidden;
+    }
+
+    /* =========================================
+       1. SPLASH SCREEN (INTRO FOTO PENEMPUHAN)
+    ========================================= */
+
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 50px 24px;
+      text-align: center;
+
+      /* Tampilan foto penempuhan */
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.15) 0%,
+          rgba(0, 0, 0, 0.4) 50%,
+          rgba(5, 10, 7, 0.92) 100%
+        ),
+        url("bg.jpg")
+        center 30% / cover no-repeat;
+
+      transition:
+        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+      cursor: pointer;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      transform: scale(1.06);
+      pointer-events: none;
+    }
+
+    .splash-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #facc15;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .splash-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8);
+      margin-bottom: 6px;
+    }
+
+    .splash-quote {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #cbd5e1;
+      max-width: 320px;
+      line-height: 1.45;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .splash-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      animation: pulseHint 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseHint {
+      0%, 100% {
+        opacity: 0.5;
+        transform: translateY(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateY(3px);
+      }
+    }
+
+    /* =========================================
+       2. KONTEN UTAMA & ANIMASI TRANSISI
+    ========================================= */
+
+    .container {
+      width: 100%;
+      max-width: 470px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.7s ease 0.3s,
+        transform 0.7s ease 0.3s;
+    }
+
+    /* Ketika intro selesai, munculkan container */
+    body.show-content .container {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Logo Organisasi */
+    .logo-wrapper {
+      margin-bottom: 18px;
+    }
+
+    .profile-logo {
+      width: 108px;
+      height: 108px;
+      object-fit: contain;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
+      transition: transform 0.25s ease;
+    }
+
+    .profile-logo:hover {
+      transform: scale(1.025);
+    }
+
+    /* Identitas */
+    .username {
+      font-size: 0.84rem;
+      color: #8eaaa0;
+      font-weight: 500;
+      margin-bottom: 7px;
+    }
+
+    .main-title {
+      font-size: 1.38rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    .institution {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #aebbb4;
+      margin-bottom: 9px;
+    }
+
+    .established {
+      font-size: 0.68rem;
+      color: #718179;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      width: 46px;
+      height: 2px;
+      margin: 20px 0 18px;
+      background: #8f2525;
+      opacity: 0.9;
+    }
+
+    .quote-box {
+      width: 100%;
+      padding: 0 14px;
+      margin-bottom: 26px;
+    }
+
+    .quote-text {
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: #a6c5b4;
+    }
+
+    /* Wadah Tombol Tautan */
+    .links-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    /* Kartu Tombol */
+    .link-card {
+      width: 100%;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 17px;
+      text-decoration: none;
+      color: #f5f7f5;
+      background: rgba(15, 22, 18, 0.82);
+      border: 1px solid rgba(190, 205, 196, 0.12);
+      border-radius: 14px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    /* Animasi Stagger untuk Empat Tombol */
+    body.show-content .link-card {
+      animation: cardSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    body.show-content .link-card:nth-child(1) {
+      animation-delay: 0.35s;
+    }
+
+    body.show-content .link-card:nth-child(2) {
+      animation-delay: 0.45s;
+    }
+
+    body.show-content .link-card:nth-child(3) {
+      animation-delay: 0.55s;
+    }
+
+    body.show-content .link-card:nth-child(4) {
+      animation-delay: 0.65s;
+    }
+
+    @keyframes cardSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      background: rgba(22, 31, 25, 0.92);
+      border-color: rgba(166, 191, 176, 0.3);
+    }
+
+    .link-card.highlight {
+      background: rgba(116, 28, 27, 0.90);
+      border-color: rgba(210, 91, 86, 0.55);
+    }
+
+    .link-card.highlight:hover {
+      background: rgba(135, 32, 30, 0.94);
+      border-color: rgba(231, 133, 127, 0.7);
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-align: left;
+    }
+
+    .link-icon {
+      width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.18rem;
+      color: #e4b92f;
+      flex-shrink: 0;
+    }
+
+    .link-card.highlight .link-icon {
+      color: #ffffff;
+    }
+
+    .link-details {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .link-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .link-sub {
+      font-size: 0.71rem;
+      color: #8d9b93;
+      line-height: 1.3;
+    }
+
+    .link-card.highlight .link-sub {
+      color: #e6b9b6;
+    }
+
+    .chevron {
+      font-size: 0.72rem;
+      color: #64736b;
+      margin-left: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .link-card:hover .chevron {
+      transform: translateX(3px);
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.67rem;
+      color: #596760;
+      letter-spacing: 0.7px;
+    }
+
+    /* RESPONSIVE MOBILE */
+    @media (max-width: 480px) {
+      body {
+        padding-top: 34px;
+      }
+
+      .profile-logo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .main-title {
+        font-size: 1.28rem;
+      }
+
+      .institution {
+        font-size: 0.73rem;
+      }
+
+      .quote-text {
+        font-size: 0.79rem;
+      }
+
+      .link-card {
+        min-height: 65px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LAYER INTRO (FOTO PENEMPUHAN) -->
+  <div id="splash-screen">
+
+    <span class="splash-badge">Berdiri Sejak 1996</span>
+
+    <h2 class="splash-title">MPA. REKSA BUANA</h2>
+
+    <p class="splash-quote">
+      "Bumi bukan warisan, tapi titipan, kami yang menjaganya#"
+    </p>
+
+    <div class="splash-hint">
+      <span>Menuju Profil</span>
+      <i class="fa-solid fa-arrow-down"></i>
+    </div>
+
+  </div>
+
+  <!-- KONTEN LINKTREE -->
+  <div class="container">
+
+    <!-- LOGO -->
+    <div class="logo-wrapper">
+      <img
+        src="logo reksa.png"
+        alt="Logo MPA Reksa Buana"
+        class="profile-logo"
+      >
+    </div>
+
+    <!-- IDENTITAS -->
+    <p class="username">@mpa.reksabuana</p>
+
+    <h1 class="main-title">MPA. REKSA BUANA</h1>
+
+    <p class="institution">
+      Universitas Islam Kadiri • Kediri
+    </p>
+
+    <p class="established">Berdiri sejak 1996</p>
+
+    <!-- PEMBATAS -->
+    <div class="divider"></div>
+
+    <!-- SLOGAN -->
+    <div class="quote-box">
+      <p class="quote-text">
+        "Bumi bukan warisan, tapi titipan,<br>
+        kami yang menjaganya."
+      </p>
+    </div>
+
+    <!-- LINK -->
+    <div class="links-wrapper">
+
+      <!-- 1. LOGISTIK -->
+      <a
+        href="https://wa.me/6282338848748?text=Halo%20Logistik%20MPA%20Reksa%20Buana"
+        target="_blank"
+        class="link-card"
+      >
+        <div class="link-left">
+
+          <div class="link-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+
+          <div class="link-details">
+            <span class="link-title">Logistik</span>
+            <span class="link-sub">Bramasta Phanasuka</span>
+          </div>
+
+        </div>
+
+        <i class="fa-solid fa-chevron-right chevron"></i>
+      </a>
+
+      <!-- 2. HUMAS -->
+      <a
+        href="https://wa.me/6281936715486?text=Halo%20Humas%20MPA%20Reksa%20Buana"
+        target="_blank"
+        class="link-card"
+      >
+        <div class="link-left">
+
+          <div class="link-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+
+          <div class="link-details">
+            <span class="link-title">Humas</span>
+            <span class="link-sub">Rafaiel Aghfar</span>
+          </div>
+
+        </div>
+
+        <i class="fa-solid fa-chevron-right chevron"></i>
+      </a>
+
+      <!-- 3. SEKRETARIATAN -->
+      <a
+        href="https://maps.app.goo.gl/fkiYbsjCMzCdH8Rr6"
+        target="_blank"
+        class="link-card"
+      >
+        <div class="link-left">
+
+          <div class="link-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+
+          <div class="link-details">
+            <span class="link-title">Sekretariatan</span>
+            <span class="link-sub">Kesekretariatan</span>
+          </div>
+
+        </div>
+
+        <i class="fa-solid fa-chevron-right chevron"></i>
+      </a>
+
+      <!-- 4. TIKTOK -->
+      <a
+        href="https://www.tiktok.com/@mpa.reksabuana"
+        target="_blank"
+        class="link-card"
+      >
+        <div class="link-left">
+
+          <div class="link-icon">
+            <i class="fa-brands fa-tiktok"></i>
+          </div>
+
+          <div class="link-details">
+            <span class="link-title">TikTok</span>
+            <span class="link-sub">Dokumentasi &amp; Video Kegiatan</span>
+          </div>
+
+        </div>
+
+        <i class="fa-solid fa-chevron-right chevron"></i>
+      </a>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      © MPA. REKSA BUANA — UNISKA KEDIRI
+    </footer>
+
+  </div>
+
+  <!-- JAVASCRIPT TRANSISI OTOMATIS -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+
+      const splash = document.getElementById('splash-screen');
+      let transitioned = false;
+
+      const triggerTransition = () => {
+
+        if (transitioned) return;
+
+        transitioned = true;
+
+        splash.classList.add('fade-out');
+        document.body.classList.add('show-content');
+
+        // Hapus elemen intro setelah animasi selesai
+        setTimeout(() => {
+          splash.remove();
+        }, 850);
+
+      };
+
+      // 1. Transisi otomatis setelah 1,6 detik
+      const timer = setTimeout(triggerTransition, 1600);
+
+      // 2. Klik layar untuk melewati intro
+      splash.addEventListener('click', () => {
+        clearTimeout(timer);
+        triggerTransition();
+      });
+
+    });
+  </script>
+
+</body>
+</html>
